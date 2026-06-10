@@ -6,10 +6,13 @@ GROUP BY aircraft_model
 ORDER BY total_flights DESC;
 
 -- Query 2: Aircraft with more than 5 flights
-SELECT aircraft_model, COUNT(*) as flight_count
+SELECT
+    aircraft_registration,
+    aircraft_model,
+    COUNT(*) AS flight_count
 FROM flights
-WHERE aircraft_model IS NOT NULL
-GROUP BY aircraft_model
+WHERE aircraft_registration IS NOT NULL
+GROUP BY aircraft_registration, aircraft_model
 HAVING COUNT(*) > 5
 ORDER BY flight_count DESC;
 
@@ -44,16 +47,17 @@ LEFT JOIN airport a2 ON f.destination_iata = a2.iata_code
 ORDER BY flight_type;
 
 -- Query 6: 5 most recent arrivals at DEL
-SELECT 
+SELECT
     f.flight_number,
-    f.aircraft_model,
-    a.name as departure_airport,
-    f.scheduled_arrival
+    f.aircraft_registration,
+    a.name AS departure_airport,
+    f.actual_arrival
 FROM flights f
-JOIN airport a ON f.origin_iata = a.iata_code
+JOIN airport a
+    ON f.origin_iata = a.iata_code
 WHERE f.destination_iata = 'DEL'
-AND f.scheduled_arrival IS NOT NULL
-ORDER BY f.scheduled_arrival DESC
+    AND f.actual_arrival IS NOT NULL
+ORDER BY f.actual_arrival DESC
 LIMIT 5;
 
 -- Query 7: Airports with no arriving flights
