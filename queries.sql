@@ -13,7 +13,7 @@ SELECT
 FROM flights
 WHERE aircraft_registration IS NOT NULL
 GROUP BY aircraft_registration, aircraft_model
-HAVING COUNT(*) > 5
+HAVING COUNT(*) > 4
 ORDER BY flight_count DESC;
 
 -- Query 3: Airports with more than 5 outbound flights

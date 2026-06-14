@@ -67,41 +67,40 @@ Stores delay statistics for airports such as:
 
 ### Dashboard Overview
 
-Displays:
+Displays KPI cards for:
 
 - Total Airports
 - Total Flights
+- Aircraft Tracked
 - Delayed Flights
-- Cancelled Flights
+- Average Delay Rate across airports
 
 ### Flight Search and Filtering
 
 Users can:
 
-- Search flights by airline code
-- Filter flights by status
-- View flight details in a table
+- Search flights by flight number or airline code
+- Filter flights by status, origin airport, and departure date range
+- View flight details (including aircraft model and registration) in a table
+
+### Airport Details Viewer
+
+Select a single airport to display:
+
+- City, country, IATA / ICAO codes, and timezone
+- All linked flights (inbound and outbound)
 
 ### Delay Analysis
 
 Visualizes:
 
-- Delayed flights by airport
+- Delay percentage by airport
 - Flight status distribution
 
-### Airport Details
+### Route Leaderboards
 
-Displays airport information including:
-
-- Name
-- City
-- Country
-- Continent
-- Timezone
-
-### Route Analysis
-
-Shows the busiest flight routes based on flight count.
+- Busiest flight routes by flight count
+- Most delayed airports by delay percentage
 
 ## SQL Analysis
 
@@ -122,19 +121,19 @@ The following SQL queries were implemented:
 ## Dashboard Screenshots
 
 ### Dashboard Overview
-![Dashboard Overview](screenshots/dashboard_overview.png)
+![Dashboard Overview](screenshots/overview.png)
 
 ### Flight Search & Filter
-![Flight Search](screenshots/flight_search.png)
+![Flight Search](<screenshots/Search & Filter Flights.png>)
 
 ### Delay Analysis
-![Delay Analysis](screenshots/delay_analysis.png)
+![Delay Analysis](<screenshots/Delay Analysis.png>)
 
 ### Airport Details
-![Airport Details](screenshots/airport_details.png)
+![Airport Details](<screenshots/Airport Details Viewer.png>)
 
 ### Busiest Routes
-![Busiest Routes](screenshots/busiest_routes.png)
+![Busiest Routes](<screenshots/Route Leaderboards.png>)
 
 ## Installation
 
@@ -146,6 +145,11 @@ cd air-tracker-flight-analytics
 Install dependencies:
 
 pip3 install -r requirements.txt 
+
+Create the database and load the schema:
+
+createdb air_tracker
+psql -d air_tracker -f schema.sql
 
 Create a .env file and add your database credentials and API key.
 
@@ -159,6 +163,10 @@ DB_PASSWORD=your_password
 
 API_KEY=your_api_key
 
+Populate the database by running the ETL notebook (run all cells in order):
+
+jupyter notebook air_tracker.ipynb
+
 Run the Streamlit application:
 
 streamlit run app.py 
@@ -169,6 +177,7 @@ air-tracker-flight-analytics/
 │
 ├── app.py
 ├── air_tracker.ipynb
+├── schema.sql
 ├── queries.sql
 ├── requirements.txt
 ├── README.md
